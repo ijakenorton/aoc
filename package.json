@@ -1,0 +1,22 @@
+{
+  "name": "aoc",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "calorie.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/rps.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/json-schema": "^7.0.13",
+    "@types/node": "^20.8.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0",
+    "typescript": "^5.2.2"
+  }
+}

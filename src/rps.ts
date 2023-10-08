@@ -1,20 +1,35 @@
 import * as readline from "readline";
 import * as fs from "fs";
-const wins = {
-  A: "Y",
+
+type gameState = {
+  A: string;
+  B: string;
+  C: string;
+  points: number;
+}
+
+const win: gameState = {
+  A : "Y",
   B: "Z",
   C: "X",
+  points: 6,
 };
-const draw = {
+const draw: gameState = {
   A: "X",
   B: "Y",
   C: "Z",
+  points: 3,
 };
-
+const lose: gameState = {
+  A: "Z",
+  B: "X",
+  C: "Y",
+  points: 0,
+};
 const conditions = {
-  X: -1,
-  Y: 0,
-  Z: 1,
+  X: lose,
+  Y: draw,
+  Z: win,
 };
 const scores = {
   X: 1,
@@ -32,19 +47,14 @@ const createLineReader = async (filePath: string) => {
 
 const process = async (lines: readline.Interface) => {
   const total = new Promise((resolve, reject) => {
-    let score = 0;
+    let score: Number = 0;
     lines.on("line", (line) => {
-      let split = line.split(" ");
-
-      score += scores[split[1]];
-      console.log("choice: ", score);
-      console.log("win left: ", split[0], "|| right: ", wins[split[0]]);
-      if (draw[split[0]] === split[1]) {
-        score += 3;
-        console.log("draw: ", score);
-      } else if (wins[split[0]] === split[1]) {
-        score += 6;
-      }
+      let split: string[] = line.split(" ");
+      let opponent: string = split[0];
+      let strategy: string = split[1];
+      let letter: string = conditions[strategy][opponent];
+      score += conditions[strategy].points;
+      score += scores[letter]
     });
     lines.on("close", () => {
       resolve(score);

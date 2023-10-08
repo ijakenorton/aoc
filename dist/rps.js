@@ -1,14 +1,27 @@
 import * as readline from "readline";
 import * as fs from "fs";
-const wins = {
+const win = {
     A: "Y",
     B: "Z",
     C: "X",
+    points: 6,
 };
 const draw = {
     A: "X",
     B: "Y",
     C: "Z",
+    points: 3,
+};
+const lose = {
+    A: "Z",
+    B: "X",
+    C: "Y",
+    points: 0,
+};
+const conditions = {
+    X: lose,
+    Y: draw,
+    Z: win,
 };
 const scores = {
     X: 1,
@@ -28,16 +41,15 @@ const process = async (lines) => {
         let score = 0;
         lines.on("line", (line) => {
             let split = line.split(" ");
-            score += scores[split[1]];
+            console.log("split: ", split);
+            let opponent = split[0];
+            let strategy = split[1];
+            console.log("strategy: ", strategy);
+            let letter = conditions[strategy][opponent];
+            console.log("letter: ", letter);
+            score += conditions[strategy].points;
+            score += scores[letter];
             console.log("choice: ", score);
-            console.log("win left: ", split[0], "|| right: ", wins[split[0]]);
-            if (draw[split[0]] === split[1]) {
-                score += 3;
-                console.log("draw: ", score);
-            }
-            else if (wins[split[0]] === split[1]) {
-                score += 6;
-            }
         });
         lines.on("close", () => {
             resolve(score);

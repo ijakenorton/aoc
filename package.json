@@ -6,7 +6,7 @@
   "main": "calorie.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/rps.js"
+    "start": "node dist/sacks.js"
   },
   "keywords": [],
   "author": "",
